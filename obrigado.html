@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recebemos o seu caso — Helane Souza</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       META PIXEL
+       Troque COLOQUE_SEU_PIXEL_ID_AQUI pelo numero do seu Pixel
+       (Gerenciador de Eventos -> conjunto de dados -> numero no topo)
+       ============================================================ -->
+  <script>
+    var META_PIXEL_ID = '1154028900530479';
+
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+    if (META_PIXEL_ID && META_PIXEL_ID.indexOf('COLOQUE') === -1) {
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+
+      // ---- Evento Lead: dispara 1 vez por envio real ----
+      // Se a URL trouxer ?eid=... (id unico gerado pelo formulario),
+      // usamos ele para deduplicar com o servidor no futuro.
+      (function () {
+        var eid = null;
+        try { eid = new URLSearchParams(window.location.search).get('eid'); } catch (e) {}
+
+        if (eid) {
+          // Um Lead por eid: recarregar a pagina nao dispara de novo.
+          var chave = 'helane_lead_' + eid;
+          var jaEnviado = false;
+          try { jaEnviado = !!localStorage.getItem(chave); } catch (e) {}
+          if (!jaEnviado) {
+            fbq('track', 'Lead', {}, { eventID: eid });
+            try { localStorage.setItem(chave, '1'); } catch (e) {}
+          }
+        } else {
+          // Sem eid (visita direta): gera um id e protege contra recarregar
+          // usando a memoria da aba (sessionStorage).
+          var jaNaSessao = false;
+          try { jaNaSessao = !!sessionStorage.getItem('helane_lead_sessao'); } catch (e) {}
+          if (!jaNaSessao) {
+            var novoId = (window.crypto && crypto.randomUUID)
+              ? crypto.randomUUID()
+              : 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+            fbq('track', 'Lead', {}, { eventID: novoId });
+            try { sessionStorage.setItem('helane_lead_sessao', novoId); } catch (e) {}
+          }
+        }
+      })();
+    }
+  </script>
+  <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1154028900530479&ev=PageView&noscript=1"></noscript>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #061420;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .cartao {
+      max-width: 760px;
+      width: 100%;
+      border: 1px solid #C89A3D;
+      background: #0A1E2D;
+      padding: 56px 44px;
+      text-align: center;
+    }
+    .rotulo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.22em;
+      color: #C89A3D;
+      margin: 0 0 22px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: clamp(29px, 4vw, 45px);
+      line-height: 1.18;
+      margin: 0 0 24px;
+      color: #F2EFE6;
+    }
+    p {
+      font-weight: 400;
+      font-size: clamp(17px, 1.4vw, 19px);
+      line-height: 1.62;
+      margin: 0 auto;
+      max-width: 520px;
+      color: rgba(242, 239, 230, 0.82);
+    }
+    .agendamento { margin-top: 36px; }
+    .agendamento a {
+      display: inline-block;
+      background: #C89A3D;
+      color: #061420;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 16px 36px;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <main class="cartao">
+    <p class="rotulo">Caso recebido</p>
+    <h1>Recebemos os seus dados.</h1>
+    <p>Se o seu caso for elegível, o contato vem por WhatsApp em até 24 horas úteis. Se estiver fora do critério, você recebe essa resposta também.</p>
+
+    <!-- ============================================================
+         ESPACO RESERVADO: link de agendamento
+         Quando tiver o link (Calendly, Google Agenda etc.),
+         troque COLOQUE_SEU_LINK_AQUI e apague os marcadores
+         de comentario <!-- e --\> em volta do bloco abaixo.
+         ============================================================ -->
+    <!--
+    <div class="agendamento">
+      <a href="COLOQUE_SEU_LINK_AQUI">Agendar minha reunião →</a>
+    </div>
+    -->
+  </main>
+</body>
+</html>
